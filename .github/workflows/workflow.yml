@@ -8,6 +8,7 @@ jobs:
   send-push-events:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - run: ./git_commit.sh
       
 # on: [pull]
