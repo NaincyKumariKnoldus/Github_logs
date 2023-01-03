@@ -51,7 +51,7 @@ do
 
 
    # send data to es
-   curl -X POST "https://72d5-103-97-214-105.in.ngrok.io/github_commit/commit" \
+   curl -X POST "https://6855-103-97-214-24.in.ngrok.io/github_commit/commit" \
       -H "Content-Type: application/json" \
       -d "{ \"commit_sha\" : \"$commitSHA\",
             \"author_name\" : \"$authorName\",
