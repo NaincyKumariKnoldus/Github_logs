@@ -80,7 +80,6 @@ do
       -d "{ \"pr_number\" : \"$PrNumber\",
             \"pr_url\" : \"$PrHtmlUrl\",
             \"pr_title\" : \"$PrTitle\",
-            \"branch\" : \"$GITHUB_REF_NAME\",
             \"repo_name\" : \"$RepoName\",
             \"pr_body\" : \"$PrBody\",
             \"pr_state\" : \"$PrState\",
