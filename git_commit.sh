@@ -51,7 +51,7 @@ do
 
 
    # send data to es
-   curl -X POST "http://localhost:9200/github_commit/commit" \
+   curl -X POST "http://103.97.214.38:9200/github_commit/commit" \
       -H "Content-Type: application/json" \
       -d "{ \"commit_sha\" : \"$commitSHA\",
             \"author_name\" : \"$authorName\",
