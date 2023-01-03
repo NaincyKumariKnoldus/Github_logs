@@ -2,15 +2,16 @@
 
 name: CI
 
+env:
+  GITHUB_REF_NAME: $GITHUB_REF_NAME
+
 # Controls when the workflow will run
 on: [push]
 jobs:
   send-push-events:
-  # The type of runner that the job will run on
+    name: Push Logs to ES
     runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    
     steps:
       - uses: actions/checkout@v2
       - run: ./git_commit.sh
-      
-
