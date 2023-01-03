@@ -3,7 +3,7 @@
 getCommitResponse=$(curl -s \
                     -H "Accept: application/vnd.github+json" \
                     -H "X-GitHub-Api-Version: 2022-11-28" \
-                    https://api.github.com/repos/NaincyKumariKnoldus/Github_logs/commits)
+                    https://api.github.com/repos/NaincyKumariKnoldus/Github_logs/commits?sha=$GITHUB_REF_NAME)
 
 # echo $getCommitResponse
 
@@ -55,6 +55,7 @@ do
       -H "Content-Type: application/json" \
       -d "{ \"commit_sha\" : \"$commitSHA\",
             \"author_name\" : \"$authorName\",
+            \"branch_name\" : \"$GITHUB_REF_NAME\",
             \"commit_message\" : \"$commitMessage\",
             \"commit_html_url\" : \"$commitHtmlUrl\",
             \"repo_name\" : \"$RepoName\",
