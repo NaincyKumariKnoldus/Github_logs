@@ -55,6 +55,7 @@ do
       -H "Content-Type: application/json" \
       -d "{ \"commit_sha\" : \"$commitSHA\",
             \"author_name\" : \"$authorName\",
+            \"branch_name\" : \"$GITHUB_REF_NAME\",
             \"commit_message\" : \"$commitMessage\",
             \"commit_html_url\" : \"$commitHtmlUrl\",
             \"repo_name\" : \"$RepoName\",
