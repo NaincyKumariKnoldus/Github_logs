@@ -75,11 +75,12 @@ do
 
 
 # send data to es
-   curl -X POST "https://2d02-103-97-214-105.in.ngrok.io/github_pull_request/PR" \
+   curl -X POST "hhttps://97e7-103-97-214-105.in.ngrok.io/github_pull_request/PR" \
       -H "Content-Type: application/json" \
       -d "{ \"pr_number\" : \"$PrNumber\",
             \"pr_url\" : \"$PrHtmlUrl\",
             \"pr_title\" : \"$PrTitle\",
+            \"branch\" : \"$GITHUB_REF_NAME\",
             \"repo_name\" : \"$RepoName\",
             \"pr_body\" : \"$PrBody\",
             \"pr_state\" : \"$PrState\",
