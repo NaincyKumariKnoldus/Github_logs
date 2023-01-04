@@ -3,7 +3,7 @@
 getCommitResponse=$(curl -s \
                     -H "Accept: application/vnd.github+json" \
                     -H "X-GitHub-Api-Version: 2022-11-28" \
-                    'https://api.github.com/repos/NaincyKumariKnoldus/Github_logs/commits?sha=$GITHUB_REF_NAME&per_page=100&page=1')
+                    'https://api.github.com/repos/NaincyKumariKnoldus/Github_logs/commits?sha=$GITHUB_REF_NAME')
 
 # echo $getCommitResponse
 
