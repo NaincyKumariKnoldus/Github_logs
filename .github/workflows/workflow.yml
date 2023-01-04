@@ -4,6 +4,7 @@ name: CI
 
 env:
   GITHUB_REF_NAME: $GITHUB_REF_NAME
+  ES_URL: ${{ secrets.ES_URL }}
 
 # Controls when the workflow will run
 on: [push]
@@ -11,18 +12,17 @@ jobs:
   send-push-events:
     name: Push Logs to ES
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2
       - run: ./git_commit.sh
-      
 # on: [pull]
 # jobs:
 #   send-pull-events:
 #     runs-on: ubuntu-latest
 #     steps:
 #       - run: ./pr.sh
-  # Triggers the workflow on push or pull request events but only for the "master" branch
+# Triggers the workflow on push or pull request events but only for the "master" branch
 #   push:
 #     branches: [ "master" ]
 #   pull_request:
