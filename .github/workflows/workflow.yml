@@ -15,4 +15,7 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
-      - run: ./git_commit.sh
+      - run: |
+          ls -lart
+          ./git_commit.sh 
+          
