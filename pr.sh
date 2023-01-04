@@ -75,7 +75,8 @@ do
 
 
 # send data to es
-   curl -X POST "https://6de6-103-97-214-24.in.ngrok.io/github_pull_request/PR" \
+   curl -X POST "https://5172-103-97-214-105.in.ngrok.io/github_pull_request/PR" \
+
       -H "Content-Type: application/json" \
       -d "{ \"pr_number\" : \"$PrNumber\",
             \"pr_url\" : \"$PrHtmlUrl\",
