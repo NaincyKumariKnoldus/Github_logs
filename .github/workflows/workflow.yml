@@ -4,6 +4,7 @@ name: CI
 
 env:
   GITHUB_REF_NAME: $GITHUB_REF_NAME
+  ES_URL: ${{ secrets.ES_URL }}
 
 # Controls when the workflow will run
 on: [push]
