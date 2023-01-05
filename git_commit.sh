@@ -7,6 +7,8 @@ getCommitResponse=$(
       https://api.github.com/repos/NaincyKumariKnoldus/Github_logs/commits?sha=$GITHUB_REF_NAME&per_page=100
 )
 
+# echo $getCommitResponse
+
 # get commit SHA
 commitSHA=$(echo "$getCommitResponse" |
    jq '.[].sha' |
@@ -19,7 +21,7 @@ echo "loopcount= $loopCount"
 
 rm -rf sha_es.txt
 # get data from ES
-getEsCommitSHA=$(curl -H "Content-Type: application/json" -X GET "$ES_URL/github/_search?pretty" -d '{
+getEsCommitSHA=$(curl -H "Content-Type: application/json" -X GET "$ES_URL/github_commit/_search?pretty" -d '{
                   "size": 10000,                                                                  
                   "query": {
                      "wildcard": {
