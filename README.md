@@ -2,4 +2,4 @@
 script for shiiping github logs to elasticsearch
 
 
-PLZZZ PLZZZ PLZZZ
+PLZZZ PLZZZ PLZZZ GOD
