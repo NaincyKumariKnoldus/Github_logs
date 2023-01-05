@@ -99,6 +99,7 @@ for ((count = 0; count < $loopCount; count++)); do
             \"pr_url\" : \"$PrHtmlUrl\",
             \"pr_title\" : \"$PrTitle\",
             \"pr_body\" : \"$PrBody\",
+            \"repo_name\" : \"$RepoName\",
             \"pr_base_branch\" : \"$PrBaseBranch\",
             \"pr_source_branch\" : \"$PrSourceBranch\",
             \"pr_state\" : \"$PrState\",
