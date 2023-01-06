@@ -51,6 +51,7 @@ do
 
 
    # send data to es
+
    curl -X POST "$ES_URL/github_commit/commit" \
       -H "Content-Type: application/json" \
       -d "{ \"commit_sha\" : \"$commitSHA\",
@@ -63,4 +64,3 @@ do
 
 
 done
-
