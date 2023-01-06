@@ -1,25 +1,23 @@
 #!/bin/bash
 
+# get github commits
 getCommitResponse=$(
    curl -s \
       -H "Accept: application/vnd.github+json" \
       -H "X-GitHub-Api-Version: 2022-11-28" \
-      "https://api.github.com/repos/NaincyKumariKnoldus/Github_logs/commits?sha=$GITHUB_REF_NAME&per_page=100"
+      "https://api.github.com/repos/NaincyKumariKnoldus/Github_logs/commits?sha=$GITHUB_REF_NAME&per_page=100&page=1"
 )
-
-# echo $getCommitResponse
 
 # get commit SHA
 commitSHA=$(echo "$getCommitResponse" |
    jq '.[].sha' |
    tr -d '"')
-# echo "commitSHA= $commitSHA"
 
+# get the loop count based on number of commits
 loopCount=$(echo "$commitSHA" |
    wc -w)
 echo "loopcount= $loopCount"
 
-rm -rf sha_es.txt
 # get data from ES
 getEsCommitSHA=$(curl -H "Content-Type: application/json" -X GET "$ES_URL/github_commit/_search?pretty" -d '{
                   "size": 10000,                                                                  
@@ -31,23 +29,26 @@ getEsCommitSHA=$(curl -H "Content-Type: application/json" -X GET "$ES_URL/github
                   jq '.hits.hits[]._source.commit_sha' |
                   tr -d '"')
 
+# store ES commit sha in a temp file
 echo $getEsCommitSHA | tr " " "\n" > sha_es.txt
-rm -rf match.txt
-rm -rf unmatch.txt
 
+# looping through each commit detail
 for ((count = 0; count < $loopCount; count++)); do
+   
    # get commitSHA
    commitSHA=$(echo "$getCommitResponse" |
       jq --argjson count "$count" '.[$count].sha' |
       tr -d '"')
 
+   # match result for previous existing commit on ES
    matchRes=$(grep -o $commitSHA sha_es.txt)
    echo $matchRes | tr " " "\n" >> match.txt
-   echo $matchRes
-   # echo $matchRes | wc -c
+
+   # filtering and pushing unmatched commit sha details to ES
    if [ -z $matchRes ]; then
       echo "Unmatched SHA: $commitSHA"
       echo $commitSHA | tr " " "\n" >> unmatch.txt
+      
       # get author name
       authorName=$(echo "$getCommitResponse" |
          jq --argjson count "$count" '.[$count].commit.author.name' |
@@ -77,24 +78,10 @@ for ((count = 0; count < $loopCount; count++)); do
             \"commit_message\" : \"$commitMessage\",
             \"commit_html_url\" : \"$commitHtmlUrl\",
             \"commit_time\" : \"$commitTime\" }"
-   else
-      echo non-empty_skip
    fi
 done
-# remove temporary file
-echo "Data From ES"
-echo "ES_Data_count:"
-cat sha_es.txt | wc -l
-cat sha_es.txt
-echo
-echo "-------------------------------------------"
-echo "Match data from ES"
-echo "Match data count:"
-cat match.txt | wc -l
-cat match.txt
-echo
-echo "-------------------------------------------"
-echo "UnMatch data from ES"
-echo "UnMatch data count:"
-cat unmatch.txt | wc -l
-cat unmatch.txt
+
+# removing temporary file
+rm -rf sha_es.txt
+rm -rf match.txt
+rm -rf unmatch.txt
