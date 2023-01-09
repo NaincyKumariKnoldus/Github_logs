@@ -43,7 +43,7 @@ for ((count = 0; count < $loopCount; count++)); do
   echo $matchRes | tr " " "\n" >> match.txt
 
   # filtering and pushing unmatched PR number details to ES
-  if [ -z $matchRes ]; then
+  if [ -z "$matchRes" ]; then
     # get PR html url
     echo $totalPR | tr " " "\n" >> unmatch.txt
     PrHtmlUrl=$(echo "$getPrResponse" |
