@@ -24,11 +24,11 @@ getEsPR=$(curl -H "Content-Type: application/json" -X GET "$ES_URL/github_pr/_se
                            "pr_number": {
                               "value": "*"
                            }}}}' |
-                  jq '.hits.hits[]._source.pr_number' |
-                  tr -d '"')
+  jq '.hits.hits[]._source.pr_number' |
+  tr -d '"')
 
 # store ES PR number in a temp file
-echo $getEsPR | tr " " "\n" > sha_es.txt
+echo $getEsPR | tr " " "\n" >sha_es.txt
 
 # looping through each PR detail
 for ((count = 0; count < $loopCount; count++)); do
@@ -37,14 +37,15 @@ for ((count = 0; count < $loopCount; count++)); do
   totalPR=$(echo "$getPrResponse" |
     jq --argjson count "$count" '.[$count].number' |
     tr -d '"')
-  
+
   # looping through each PR detail
   matchRes=$(grep -o $totalPR sha_es.txt)
-  echo $matchRes | tr " " "\n" >>match.txt
+  echo $matchRes | tr " " "\n" >> match.txt
 
   # filtering and pushing unmatched PR number details to ES
   if [ -z $matchRes ]; then
     # get PR html url
+    echo $totalPR | tr " " "\n" >> unmatch.txt
     PrHtmlUrl=$(echo "$getPrResponse" |
       jq --argjson count "$count" '.[$count].html_url' |
       tr -d '"')
@@ -58,6 +59,7 @@ for ((count = 0; count < $loopCount; count++)); do
     PrNumber=$(echo "$getPrResponse" |
       jq --argjson count "$count" '.[$count].number' |
       tr -d '"')
+
 
     # get PR Title
     PrTitle=$(echo "$getPrResponse" |
@@ -73,16 +75,19 @@ for ((count = 0; count < $loopCount; count++)); do
     PrCreatedAt=$(echo "$getPrResponse" |
       jq --argjson count "$count" '.[$count].created_at' |
       tr -d '"')
+    # echo "PR_created at: $PrCreatedAt"
 
     # get PR closed at
     PrCloseAt=$(echo "$getPrResponse" |
       jq --argjson count "$count" '.[$count].closed_at' |
       tr -d '"')
+    # echo "PR closed at: $PrCloseAt"
 
     # get PR merged at
     PrMergedAt=$(echo "$getPrResponse" |
       jq --argjson count "$count" '.[$count].merged_at' |
       tr -d '"')
+    # echo "PR_merged at: $PrMergedAt"
 
     # get base branch name
     PrBaseBranch=$(echo "$getPrResponse" |
@@ -106,7 +111,8 @@ for ((count = 0; count < $loopCount; count++)); do
             \"pr_state\" : \"$PrState\",
             \"pr_creation_time\" : \"$PrCreatedAt\",
             \"pr_closed_time\" : \"$PrCloseAt\",
-            \"pr_merge_at\" : \"$PrMergedAt\"}"
+            \"pr_merge_at\" : \"$PrMergedAt\"
+          }"
   fi
 done
 
