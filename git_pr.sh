@@ -103,16 +103,16 @@ for ((count = 0; count < $loopCount; count++)); do
     curl -X POST "$ES_URL/github_pr/pull_request" \
       -H "Content-Type: application/json" \
       -d "{ \"pr_number\" : \"$PrNumber\",
-            \"pr_url\" : \"$PrHtmlUrl\",
-            \"pr_title\" : \"$PrTitle\",
-            \"pr_body\" : \"$PrBody\",
-            \"pr_base_branch\" : \"$PrBaseBranch\",
-            \"pr_source_branch\" : \"$PrSourceBranch\",
-            \"pr_state\" : \"$PrState\",
-            \"pr_creation_time\" : \"$PrCreatedAt\",
-            \"pr_closed_time\" : \"$PrCloseAt\",
-            \"pr_merge_at\" : \"$PrMergedAt\"
-          }"
+        \"pr_url\" : \"$PrHtmlUrl\",
+        \"pr_title\" : \"$PrTitle\",
+        \"pr_body\" : \"$PrBody\",
+        \"pr_base_branch\" : \"$PrBaseBranch\",
+        \"pr_source_branch\" : \"$PrSourceBranch\",
+        \"pr_state\" : \"$PrState\",
+        \"pr_creation_time\" : \"$PrCreatedAt\",
+        \"pr_closed_time\" : \"$PrCloseAt\",
+        \"pr_merge_at\" : \"$PrMergedAt\"
+        }"
   fi
 done
 
