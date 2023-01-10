@@ -3,4 +3,4 @@ Script for shiiping github logs to elasticsearch
 
 
 
-test
+final_test
